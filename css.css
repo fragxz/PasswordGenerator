@@ -1,0 +1,120 @@
+input[type=checkbox] {
+	visibility: hidden;
+}
+
+.checkbox {
+	width: 30px;
+	height: 30px;
+	background: #ddd;
+
+	border-radius: 100%;
+	position: relative;
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.checkbox label {
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 100px;
+
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 1;
+
+	background: #333;
+
+	-webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.checkbox input[type=checkbox]:checked + label {
+	background: #26ca28;
+}
+
+.css-input 
+{ 
+	width: 480px;
+	padding:6px; 
+	font-size:16px; 
+	border-width:2px; 
+	border-radius:0px; 
+	border-style:solid; 
+	color:#26ca29; 
+	background-color:#525252; 
+	border-color:#26ca29; 
+	box-shadow:inset -1px 0px 10px 0px rgba(42,42,42,.68); 
+	text-shadow:1px 2px 0px rgba(42,42,42,.66);  
+} 
+	
+.css-input:focus { outline:none; } 
+
+
+.submit_pwgen {
+	-moz-box-shadow:inset 0px 0px 0px 0px #26ca29;
+	-webkit-box-shadow:inset 0px 0px 0px 0px #26ca29;
+	box-shadow:inset 0px 0px 0px 0px #26ca29;
+	background: #333;
+	background-color: #333;
+	-webkit-border-top-left-radius:2px;
+	-moz-border-radius-topleft:2px;
+	border-top-left-radius:2px;
+	-webkit-border-top-right-radius:2px;
+	-moz-border-radius-topright:2px;
+	border-top-right-radius:2px;
+	-webkit-border-bottom-right-radius:2px;
+	-moz-border-radius-bottomright:2px;
+	border-bottom-right-radius:2px;
+	-webkit-border-bottom-left-radius:2px;
+	-moz-border-radius-bottomleft:2px;
+	border-bottom-left-radius:2px;
+	text-indent:0px;
+	border:1px solid #268a16;
+	display:inline-block;
+	color:#26ca29;
+	font-family:Arial;
+	font-size:17px;
+	font-weight:bold;
+	font-style:normal;
+	height:30px;
+	#line-height:43px;
+	width:131px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 3px 0px #000000;
+}
+.submit_pwgen:hover {
+	background-color:#515151;
+}.submit_pwgen:active {
+	position:relative;
+	top:1px;
+}
+
+.pwlength_dropdown
+{
+    background-color: #515151;
+    color: #26ca28;
+	border: 0 none;
+	height: 30px;
+	width: 40px;
+}
+
+a:link
+{
+	color: #26ca28;
+}
+
+a:visited, a:hover
+{
+	color: #D1D1D1;
+}
