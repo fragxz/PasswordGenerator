@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css.css" />
+    <title>FRXZ | PWGEN</title>
+
+<script>
+    var text_input = document.getElementById ('passwort');
+    text_input.focus ();
+    text_input.select ();
+</script>
+
+
+
+</head>
+
+<div style="padding-top:40px"></div>
+<body bgcolor="#444444" style="font-size: 20px; color:#26CA28; text-shadow: 1px 1px 1px #000;">
+
+<div align="center" style="background:#232323; width: 500px; padding:20px; margin: auto; " >
+
+
+<input type="text" onFocus="this.select()" class="css-input" id="passwort" autofocus readonly value="" style="margin-bottom: 20px">
+<br />
+<input name="submit" type="submit" class="submit_pwgen" onclick="divInhaltZuruecksetzen('passwort'); bildeZufallsWortkette()" value="PWGEN!"></p>
+
+
+</div> 
+
+
+
+<p align="center" style="color: #7C7C7C; font-size: 10.8px;">WELCOME TO THE UPDATED VERSION OF THE FUCKING AWESOME PASSWORTGENERATOR TO THE MAX <br />
+HAUPTSACHE DU MACHST DIR WIRKLICH DIE M&Uuml;HE DAS HIER ZU LESEN, IRGENDWIE S&Uuml;&szlig;</p>
+
+<br />
+
+
+
+
+<script>
+
+		
+function divInhaltZuruecksetzen(divID) {
+    document.getElementById(divID).value = '';
+}
+
+
+function bildeZufallsWortkette(anzahlWoerter = 3, leerzeichenGetrennt = false) {
+
+    var wortlisten = [
+    /* Sport */ ['Fussball', 'Sport', 'Hockey', 'Airsoft', 'Aquaball', 'Ballbadminton', 'Ballonspiel', 'Baseball', 'Basketball', 'Bowling', 'Broomball', 'Diskuswurf', 'E-Sport', 'Eisklettern', 'Flossenschwimmen', 'Gymnastik', 'Kanurennsport', 'Klettern', 'Leichtathletik', 'Parkour', 'Radsport', 'Schlagball'],
+    /* Mathe */['Algorithmus', 'Rechnen', 'Subtrahieren', 'Addieren', 'Vektor', 'Zahl', 'Zahlen', 'Zahlenmenge', 'Funktion', 'Wahrscheinlichkeit', 'Absolutbetrag', 'Addition', 'Allquantor', 'Aufgabe', 'Beispiel', 'Basiswinkel', 'Winkel', 'Hyperbel', 'Inkreis', 'Kettenlinie', 'Kombinatorik', 'Kosinus', 'Kugel', 'Mittelparallele', 'Multiplikand', 'Realteil', 'Sattelpunkt', 'Torus', 'Volumen', 'Zielmenge', 'Zufallszahl'],
+    /* Musik */ ['Note', 'Musik', 'Tonkunst', 'Ton', 'Werk', 'Meisterwerk', 'Accento', 'Adagio', 'Akustik', 'Alteration', 'Amplitude', 'Auftakt', 'Augmentation', 'Ausdrucksbezeichnungen', 'Ballade', 'Cembalo', 'Cymbal', 'Dessus', 'Diatonik', 'Durchgangsnote', 'Einklang', 'Exposition', 'Fagott', 'Fundament', 'Generalprobe', 'Griffbrett', 'Halleluja', 'Harmonie', 'Hymne', 'Laute', 'Impromptu', 'Invention', 'Refrain', 'Rohrblatt', 'Tamburin', 'Variation', 'Vokalmusik', 'Volksmusik', 'Xylophon', 'Ziehharmonika', 'Zyklus'],
+    /* Kunst */ ['Kunst', 'Stil', 'Gemälde', 'Epoche', 'Kunstwerk', 'Impressionismus', 'Pop Art', 'Romantik', 'Kubismus', 'Expressionismus'],
+    /* Reisen, Infrastruktur, Politik, Geographie */
+];
+
+    
+
+    var passwort = '';
+    var zufallsNummer = '';
+    var zufallsWort = '';
+
+    for (u = 0; u < anzahlWoerter; u++) {
+
+        // Math.floor(Math.random() * ArrayEins.length)
+        anzahlWoerterlisten = Array.from(Array(wortlisten.length).keys());
+
+        zufallsNummer = Math.floor(Math.random() * anzahlWoerterlisten.length);
+
+        // splice value
+        for( var i = 0; i < anzahlWoerterlisten.length; i++){ 
+            if ( anzahlWoerterlisten[i] === zufallsNummer) {
+                anzahlWoerterlisten.splice(i, 1); 
+                i--;
+            }
+        }
+
+        zufallsWort = Math.floor(Math.random() * wortlisten[zufallsNummer].length);
+        passwort = wortlisten[zufallsNummer][zufallsWort];
+        
+        var leerzeichen = ' ';
+        var divPasswort = document.getElementById('passwort');
+        
+        if ( leerzeichenGetrennt && divPasswort.value.length > 0 )
+        {
+            divPasswort.value += leerzeichen;
+        }
+
+        divPasswort.value += passwort;
+    }
+
+    
+
+
+}
+
+
+// alert( wortlisten[2][1] ); // cake
+
+
+
+bildeZufallsWortkette(3);
+
+</script>
+
+  
+  
+  
+  </body>
+  </html>
