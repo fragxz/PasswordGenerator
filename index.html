@@ -20,13 +20,56 @@
 	<br />
 	<input name="submit" type="submit" class="submit_pwgen" onclick="divInhaltZuruecksetzen('passwort'); bildeZufallsWortkette()" value="PWGEN!"></p>
 
+    <div style="height:40px; margin: 10px;">
+        <div class="checkbox" style="float:left; left: 20%;">
+            
+                <input type="checkbox" id="leerzeichenCheckbox" name="leerzeichenCheckbox" style="background:#444444" onclick="divInhaltZuruecksetzen('passwort'); getLeerzeichenInputValue();"> 
+                <label for="leerzeichenCheckbox"></label> 
+            
+        </div>
+        <div> Leerzeichen</div>
+    </div>
+
+    <div style="height:40px; margin: 10px;">
+            <div class="checkbox" style="float:left; left: 20%;">
+                
+                    <input type="checkbox" id="extrazeichenCheckbox" name="extrazeichenCheckbox" style="background:#444444" onclick="divInhaltZuruecksetzen('passwort'); getLeerzeichenInputValue();"> 
+                    <label for="extrazeichenCheckbox"></label> 
+                
+            </div>
+            <div> Nummer + Sonderzeichen </div>
+    </div>
+
+
 </div> 
 
 <br />
 
 <script>
 
-		
+
+function getLeerzeichenInputValue() {
+    var leerzeichenInputValue = document.getElementById('leerzeichenCheckbox').checked;
+
+    return leerzeichenInputValue;
+}
+
+function getExtrazeichenCheckbox() {
+    var extrazeichenInputValue = document.getElementById('extrazeichenCheckbox').checked;
+    var extrazeichen = '';
+
+    if ( extrazeichenInputValue ) {
+        var sonderzeichenArray = '!@#$%^&*';
+
+        var extrazeichenNummer = Math.floor(Math.random() * 6) + 1;
+        var extrazeichenSonderzeichen = sonderzeichenArray[Math.floor(Math.random() * sonderzeichenArray.length)];
+
+        extrazeichen = extrazeichenNummer + extrazeichenSonderzeichen;
+    }
+
+    return extrazeichen;
+}
+
 function divInhaltZuruecksetzen(divID) {
     document.getElementById(divID).value = '';
 }
@@ -37,13 +80,14 @@ function bildeZufallsWortkette(anzahlWoerter = 3, leerzeichenGetrennt = false) {
     /* Sport */ ['Fussball', 'Sport', 'Hockey', 'Airsoft', 'Aquaball', 'Ballbadminton', 'Ballonspiel', 'Baseball', 'Basketball', 'Bowling', 'Broomball', 'Diskuswurf', 'E-Sport', 'Eisklettern', 'Flossenschwimmen', 'Gymnastik', 'Kanurennsport', 'Klettern', 'Leichtathletik', 'Parkour', 'Radsport', 'Schlagball'],
     /* Mathe */['Algorithmus', 'Rechnen', 'Subtrahieren', 'Addieren', 'Vektor', 'Zahl', 'Zahlen', 'Zahlenmenge', 'Funktion', 'Wahrscheinlichkeit', 'Absolutbetrag', 'Addition', 'Allquantor', 'Aufgabe', 'Beispiel', 'Basiswinkel', 'Winkel', 'Hyperbel', 'Inkreis', 'Kettenlinie', 'Kombinatorik', 'Kosinus', 'Kugel', 'Mittelparallele', 'Multiplikand', 'Realteil', 'Sattelpunkt', 'Torus', 'Volumen', 'Zielmenge', 'Zufallszahl'],
     /* Musik */ ['Note', 'Musik', 'Tonkunst', 'Ton', 'Werk', 'Meisterwerk', 'Accento', 'Adagio', 'Akustik', 'Alteration', 'Amplitude', 'Auftakt', 'Augmentation', 'Ausdrucksbezeichnungen', 'Ballade', 'Cembalo', 'Cymbal', 'Dessus', 'Diatonik', 'Durchgangsnote', 'Einklang', 'Exposition', 'Fagott', 'Fundament', 'Generalprobe', 'Griffbrett', 'Halleluja', 'Harmonie', 'Hymne', 'Laute', 'Impromptu', 'Invention', 'Refrain', 'Rohrblatt', 'Tamburin', 'Variation', 'Vokalmusik', 'Volksmusik', 'Xylophon', 'Ziehharmonika', 'Zyklus'],
-    /* Kunst */ ['Kunst', 'Stil', 'Gemälde', 'Epoche', 'Kunstwerk', 'Impressionismus', 'Pop Art', 'Romantik', 'Kubismus', 'Expressionismus'],
+    /* Kunst */ ['Kunst', 'Stil', 'Gemälde', 'Epoche', 'Kunstwerk', 'Impressionismus', 'PopArt', 'Romantik', 'Kubismus', 'Expressionismus'],
     /* Reisen, Infrastruktur, Politik, Geographie */
 ];
 
     var passwort = '';
     var zufallsNummer = '';
     var zufallsWort = '';
+    var extrazeichen = '';
 
     for (u = 0; u < anzahlWoerter; u++) {
 
@@ -63,6 +107,9 @@ function bildeZufallsWortkette(anzahlWoerter = 3, leerzeichenGetrennt = false) {
         zufallsWort = Math.floor(Math.random() * wortlisten[zufallsNummer].length);
         passwort = wortlisten[zufallsNummer][zufallsWort];
         
+        leerzeichenGetrennt = getLeerzeichenInputValue();
+        extrazeichen = getExtrazeichenCheckbox();
+
         var leerzeichen = ' ';
         var divPasswort = document.getElementById('passwort');
         
@@ -73,6 +120,8 @@ function bildeZufallsWortkette(anzahlWoerter = 3, leerzeichenGetrennt = false) {
 
         divPasswort.value += passwort;
     }
+
+    divPasswort.value += extrazeichen;
 }
 
 bildeZufallsWortkette(3);
