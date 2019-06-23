@@ -5,9 +5,13 @@
     <link rel="stylesheet" href="css.css" />
     <title>FRXZ | PWGEN</title>
 	<script>
-		var text_input = document.getElementById ('passwort');
+		/*
+        var text_input = document.getElementById ('passwort');
 		text_input.focus ();
 		text_input.select ();
+        */
+        
+        
     </script>
     <style>
         #anzahlWoerterDropdown {
@@ -46,9 +50,9 @@
 
 <div align="center" style="background:#232323; width: 500px; padding:20px; margin: auto; " >
 
-	<input type="text" onFocus="this.select()" class="css-input" id="passwort" autofocus readonly value="" style="margin-bottom: 20px">
+	<input type="text" onFocus="this.select()" onclick="copyToClipboard();" class="css-input" id="passwort" autofocus readonly value="" style="margin-bottom: 20px">
 	<br />
-	<input name="submit" type="submit" class="submit_pwgen" onclick="divInhaltZuruecksetzen('passwort'); bildeZufallsWortkette()" value="PWGEN!"></p>
+	<input name="submit" type="submit" class="submit_pwgen" onclick="divInhaltZuruecksetzen('passwort'); bildeZufallsWortkette(); copyToClipboard();" value="PWGEN!"></p>
 
     <div style="height:40px; margin: 10px;">
         <div class="checkbox" style="float:left; left: 20%;">
@@ -103,6 +107,7 @@
 
 
 <script>
+
 
 
 var wortlisten = [
@@ -197,6 +202,19 @@ function generiereWunschPasswort(wunschPasswortArray) {
 
     divPasswort.value += extrazeichen;
 
+
+}
+
+function sleep(miliseconds) {
+                var currentTime = new Date().getTime();
+                while (currentTime + miliseconds >= new Date().getTime()) {
+                }
+            }
+
+function copyToClipboard() {
+  var copyText = document.getElementById("passwort");
+  copyText.select();
+  document.execCommand("copy");
 }
 
 function showWoerterArrayDropdown(selectedAnzahlWoerterValue, i) {
@@ -290,6 +308,9 @@ function bildeZufallsWortkette(anzahlWoerter = 3, leerzeichenGetrennt = false) {
     }
 
     divPasswort.value += extrazeichen;
+
+    
+
 }
 
 bildeZufallsWortkette(3);
