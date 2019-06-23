@@ -8,7 +8,37 @@
 		var text_input = document.getElementById ('passwort');
 		text_input.focus ();
 		text_input.select ();
-	</script>
+    </script>
+    <style>
+        #anzahlWoerterDropdown {
+            background-color: #515151;
+            color: #26ca28;
+            border: 0 none;
+            height: 30px;
+            padding: 5px;
+            overflow: scroll;
+            width: 290px;
+            font-size: 15px;
+        }
+
+        .customizePasswordDropdown {
+            background-color: #515151;
+            color: #26ca28;
+            border: 0 none;
+            height: 80px;
+            width: 80px;
+        }
+
+        #anzahlWoerterDiv {
+            background: #232323;
+            padding: 10px;
+        }
+
+        .optionCSS {
+            display: inline;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <div style="padding-top:40px"></div>
@@ -30,7 +60,7 @@
         <div> Leerzeichen</div>
     </div>
 
-    <div style="height:40px; margin: 10px;">
+    <div style="height:40px;">
             <div class="checkbox" style="float:left; left: 20%;">
                 
                     <input type="checkbox" id="extrazeichenCheckbox" name="extrazeichenCheckbox" style="background:#444444" onclick="divInhaltZuruecksetzen('passwort'); getLeerzeichenInputValue();"> 
@@ -43,10 +73,156 @@
 
 </div> 
 
+
 <br />
+
+
+<div align="center" style="width: 540px; padding:20px; margin: auto; padding: 10px;" >
+
+    <div style="height:40px; background: #232323; padding-top: 10px;">
+        Customize
+        <div id="anzahlWoerterDiv">
+                <select name="anzahlWoerterDropdown" id="anzahlWoerterDropdown" size="5"  onChange="singleSelectChangeValue();">
+
+                    <script>
+                    for (i = 1; i < 11; i++) {
+                        document.write ('<option value="' + i + '" class="optionCSS">' + i + '</option>');
+                    }            
+                    </script>
+                    
+                </select>
+
+                <div id="woerterArrayDiv">
+
+                </div>
+        </div>
+        
+    </div>
+
+</div> 
+
 
 <script>
 
+
+var wortlisten = [
+    /* Sport */ ['Fussball', 'Sport', 'Hockey', 'Airsoft', 'Aquaball', 'Ballbadminton', 'Ballonspiel', 'Baseball', 'Basketball', 'Bowling', 'Broomball', 'Diskuswurf', 'E-Sport', 'Eisklettern', 'Flossenschwimmen', 'Gymnastik', 'Kanurennsport', 'Klettern', 'Leichtathletik', 'Parkour', 'Radsport', 'Schlagball'],
+    /* Mathe */['Algorithmus', 'Rechnen', 'Subtrahieren', 'Addieren', 'Vektor', 'Zahl', 'Zahlen', 'Zahlenmenge', 'Funktion', 'Wahrscheinlichkeit', 'Absolutbetrag', 'Addition', 'Allquantor', 'Aufgabe', 'Beispiel', 'Basiswinkel', 'Winkel', 'Hyperbel', 'Inkreis', 'Kettenlinie', 'Kombinatorik', 'Kosinus', 'Kugel', 'Mittelparallele', 'Multiplikand', 'Realteil', 'Sattelpunkt', 'Torus', 'Volumen', 'Zielmenge', 'Zufallszahl'],
+    /* Musik */ ['Note', 'Musik', 'Tonkunst', 'Ton', 'Werk', 'Meisterwerk', 'Accento', 'Adagio', 'Akustik', 'Alteration', 'Amplitude', 'Auftakt', 'Augmentation', 'Ausdrucksbezeichnungen', 'Ballade', 'Cembalo', 'Cymbal', 'Dessus', 'Diatonik', 'Durchgangsnote', 'Einklang', 'Exposition', 'Fagott', 'Fundament', 'Generalprobe', 'Griffbrett', 'Halleluja', 'Harmonie', 'Hymne', 'Laute', 'Impromptu', 'Invention', 'Refrain', 'Rohrblatt', 'Tamburin', 'Variation', 'Vokalmusik', 'Volksmusik', 'Xylophon', 'Ziehharmonika', 'Zyklus'],
+    /* Kunst */ ['Kunst', 'Stil', 'Gemälde', 'Epoche', 'Kunstwerk', 'Impressionismus', 'PopArt', 'Romantik', 'Kubismus', 'Expressionismus'],
+    /* Weitere: Reisen, Infrastruktur, Politik, Geographie */
+];
+
+    var wunschPasswortArray = [];
+
+function singleSelectChangeValue() {
+
+        var selectedOption = document.getElementById("anzahlWoerterDropdown");
+        var selValue = selectedOption.options[selectedOption.selectedIndex].value;
+
+        document.getElementById("woerterArrayDiv").innerHTML = '';
+
+        for (i = 0; i < selValue; i++) {
+            
+
+            document.getElementById("woerterArrayDiv").innerHTML += showWoerterArrayDropdown(selValue, i);
+            
+        }
+
+    }
+
+function wunschPasswortZusammenstellen(i, wunschPasswortArray, anzahlWoerter) {
+
+    var selectedOption = document.getElementById("anzahlWoerterDropdown" + i);
+    var selValue = selectedOption.options[selectedOption.selectedIndex].value;
+
+    wunschPasswortArray[i] = selValue;
+    if ( wunschPasswortArray.length == anzahlWoerter ) {
+        // Passwort vollständig
+
+        divInhaltZuruecksetzen('passwort'); 
+        generiereWunschPasswort(wunschPasswortArray);
+    }
+    console.log(wunschPasswortArray);
+
+}
+
+function generiereWunschPasswort(wunschPasswortArray) {
+// eig bildeZufallsWortkette copy pasten und statt randomWoerterlisten die übergebenen nehmen! (aus Sport dann zB array 1 wählen)
+
+
+        var passwort = '';
+        var zufallsNummer = '';
+        var extrazeichen = '';
+
+        var wortlistenElementNummer;
+
+        for (u = 0; u < wunschPasswortArray.length; u++) {
+
+            // Beispiel: "Sport" umrechnen in [0]
+            switch( wunschPasswortArray[u] ) {
+                case 'Sport':
+                    wortlistenElementNummer = 0;
+                    break;
+                case 'Mathe':
+                    wortlistenElementNummer = 1;
+                    break;
+                case 'Musik':
+                    wortlistenElementNummer = 2;
+                    break;
+                case 'Kunst':
+                    wortlistenElementNummer = 3;
+                    break;
+            }
+
+            // aus dem Array wortlisten[0] einen zufälligen Wert holen
+            zufallsNummer = Math.floor(Math.random() * wunschPasswortArray.length);
+
+            // Passwort speichern
+            passwort = wortlisten[wortlistenElementNummer][zufallsNummer];
+        
+            leerzeichenGetrennt = getLeerzeichenInputValue();
+            extrazeichen = getExtrazeichenCheckbox();
+
+            var leerzeichen = ' ';
+            var divPasswort = document.getElementById('passwort');
+            
+            if ( leerzeichenGetrennt && divPasswort.value.length > 0 )
+            {
+                divPasswort.value += leerzeichen;
+            }
+
+            divPasswort.value += passwort;
+        }
+
+    divPasswort.value += extrazeichen;
+
+}
+
+function showWoerterArrayDropdown(selectedAnzahlWoerterValue, i) {
+
+    var wortlistenOberbegriffe = ['Sport', 'Mathe', 'Musik', 'Kunst'];
+    var returnWortlistAlsDropdown = '';
+    returnWortlistAlsDropdown += '<select class="customizePasswordDropdown" name="anzahlWoerterDropdown' + i + '" id="anzahlWoerterDropdown' + i + '" size="5" onChange="wunschPasswortZusammenstellen('+ i +', wunschPasswortArray, ' + selectedAnzahlWoerterValue + ');">';
+
+    wortlistenOberbegriffe.forEach(element => {
+        returnWortlistAlsDropdown += '<option>' + element + '</option>';  
+    });
+
+    returnWortlistAlsDropdown += '</select>';    
+
+    return returnWortlistAlsDropdown;
+}
+
+function dropdownAuswahlAnzahlWoerter() {
+    
+    document.getElementById('anzahlWoerterDiv').innerHTML += 'asd';
+
+
+
+    document.getElementById('anzahlWoerterDiv').innerHTML += '</select>';
+
+}
 
 function getLeerzeichenInputValue() {
     var leerzeichenInputValue = document.getElementById('leerzeichenCheckbox').checked;
@@ -75,14 +251,6 @@ function divInhaltZuruecksetzen(divID) {
 }
 
 function bildeZufallsWortkette(anzahlWoerter = 3, leerzeichenGetrennt = false) {
-
-    var wortlisten = [
-    /* Sport */ ['Fussball', 'Sport', 'Hockey', 'Airsoft', 'Aquaball', 'Ballbadminton', 'Ballonspiel', 'Baseball', 'Basketball', 'Bowling', 'Broomball', 'Diskuswurf', 'E-Sport', 'Eisklettern', 'Flossenschwimmen', 'Gymnastik', 'Kanurennsport', 'Klettern', 'Leichtathletik', 'Parkour', 'Radsport', 'Schlagball'],
-    /* Mathe */['Algorithmus', 'Rechnen', 'Subtrahieren', 'Addieren', 'Vektor', 'Zahl', 'Zahlen', 'Zahlenmenge', 'Funktion', 'Wahrscheinlichkeit', 'Absolutbetrag', 'Addition', 'Allquantor', 'Aufgabe', 'Beispiel', 'Basiswinkel', 'Winkel', 'Hyperbel', 'Inkreis', 'Kettenlinie', 'Kombinatorik', 'Kosinus', 'Kugel', 'Mittelparallele', 'Multiplikand', 'Realteil', 'Sattelpunkt', 'Torus', 'Volumen', 'Zielmenge', 'Zufallszahl'],
-    /* Musik */ ['Note', 'Musik', 'Tonkunst', 'Ton', 'Werk', 'Meisterwerk', 'Accento', 'Adagio', 'Akustik', 'Alteration', 'Amplitude', 'Auftakt', 'Augmentation', 'Ausdrucksbezeichnungen', 'Ballade', 'Cembalo', 'Cymbal', 'Dessus', 'Diatonik', 'Durchgangsnote', 'Einklang', 'Exposition', 'Fagott', 'Fundament', 'Generalprobe', 'Griffbrett', 'Halleluja', 'Harmonie', 'Hymne', 'Laute', 'Impromptu', 'Invention', 'Refrain', 'Rohrblatt', 'Tamburin', 'Variation', 'Vokalmusik', 'Volksmusik', 'Xylophon', 'Ziehharmonika', 'Zyklus'],
-    /* Kunst */ ['Kunst', 'Stil', 'Gemälde', 'Epoche', 'Kunstwerk', 'Impressionismus', 'PopArt', 'Romantik', 'Kubismus', 'Expressionismus'],
-    /* Reisen, Infrastruktur, Politik, Geographie */
-];
 
     var passwort = '';
     var zufallsNummer = '';
