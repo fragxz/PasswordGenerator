@@ -42,11 +42,24 @@
             display: inline;
             padding: 10px;
         }
+
+        .notification {
+            margin: auto;
+            text-align: center;
+            padding: 10px;
+            background-color: green;
+            width: 200px;
+            display: none;
+        }
     </style>
 </head>
 
 <div style="padding-top:40px"></div>
 <body bgcolor="#444444" style="font-size: 20px; color:#26CA28; text-shadow: 1px 1px 1px #000;">
+
+
+    <div class="notification" id="notification"></div> <br/>
+
 
 <div align="center" style="background:#232323; width: 500px; padding:20px; margin: auto; " >
 
@@ -104,6 +117,8 @@
     </div>
 
 </div> 
+
+
 
 
 <script>
@@ -205,16 +220,25 @@ function generiereWunschPasswort(wunschPasswortArray) {
 
 }
 
-function sleep(miliseconds) {
-                var currentTime = new Date().getTime();
-                while (currentTime + miliseconds >= new Date().getTime()) {
-                }
-            }
+/*
+Zeigt einen Hinweis, dass das Passwort in die Zwischenablage kopiert wurde
+Die Message ist customizable.
+Der Timer, wann die Nachricht verschwindet ist customizable.
+*/
+function displayNotification(message, timer) {
+    var notificationDiv = document.getElementById('notification');
+    notificationDiv.innerHTML = message;
+    notificationDiv.style.display = "block";
+    setTimeout( function(){ notificationDiv.style.display = "none"; }, timer);
+    
+}
 
 function copyToClipboard() {
   var copyText = document.getElementById("passwort");
   copyText.select();
   document.execCommand("copy");
+
+  displayNotification("Copied to Clipboard", 3000);
 }
 
 function showWoerterArrayDropdown(selectedAnzahlWoerterValue, i) {
